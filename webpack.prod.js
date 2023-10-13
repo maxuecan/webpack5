@@ -8,6 +8,7 @@ const TerserWebpackPlugin = require('terser-webpack-plugin')
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
 const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin')
 const WorkboxPlugin = require('workbox-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin') // 复制文件或目录的插件
 
 const threads = os.cpus().length; // cpu核数
 
@@ -151,6 +152,14 @@ module.exports = {
       clientsClaim: true,
       skipWaiting: true,
     }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, '目录名称'),
+          to: '目录名称', // 指打包后的目录为根目录
+        },
+      ]
+    })
   ],
   optimization: {
     splitChunks: {
